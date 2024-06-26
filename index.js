@@ -6,6 +6,14 @@ const {Server} =require('socket.io')
 const app=express()
 const server=http.createServer(app);
 const io=new Server(server)
+const httpProxy = require("http-proxy");
+
+httpProxy
+  .createProxyServer({
+    target: "https://socket-sigma-six.vercel.app/",
+    ws: true,
+  })
+  .listen(80);
 
 io.on('connection',(socket)=>{
     socket.on('user-message',(message)=>{
